@@ -21,6 +21,7 @@
 #include <unistd.h>
 
 #ifdef EXTRACTION
+int g_invert_match = 0;
 #include "pcap_writer.h"
 #endif
 
@@ -661,8 +662,6 @@ static int process_radiotap(unsigned char *buf, int len)
 }
 */
 
-
-
 int process_2_4(FILE *file, char *filename, unsigned int lt, int nsres)
 {
 	int save, retval;
@@ -772,7 +771,7 @@ int process_2_4(FILE *file, char *filename, unsigned int lt, int nsres)
 		}
 
 #ifdef EXTRACTION
-		if(save) {
+		if(save ^ g_invert_match) {
 			// Found a needle, save it in our new PCAP
 			if(nsres) { needle_add_ns(&buf[0], pkt_hdr.incl_len, pkt_hdr.sec, pkt_hdr.frac); }
 			else { needle_add_us(&buf[0], pkt_hdr.incl_len, pkt_hdr.sec, pkt_hdr.frac); }
@@ -788,10 +787,19 @@ int process_2_4(FILE *file, char *filename, unsigned int lt, int nsres)
 
 int process_pcapfile(char *filename)
 {
-	int retval, nsres;
-	size_t r;
-	struct pcap_file_header pcap_hdr;
 	FILE *file;
+	size_t r;
+	int retval, nsres;
+	struct pcap_file_header pcap_hdr;
+
+#ifdef EXTRACTION
+	char *env_val;
+	//Check for INVERTMATCH flag
+	env_val = getenv("INVERTMATCH");
+	if(env_val) {
+		if(*env_val != '0') { g_invert_match = 1; }
+	}
+#endif
 
 	file = fopen(filename, "r");
 	if(!file) {
