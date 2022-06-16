@@ -1,3 +1,4 @@
 # TODO
 
-* supprot pcapng
+* support pcapng
+* implement packet de-duplication
