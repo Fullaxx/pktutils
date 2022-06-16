@@ -60,6 +60,7 @@ static void import_ipp_list(char *list)
 			if(strcasecmp(token,     "GRE") == 0) { g_ipp_a[IPPROTO_GRE]     = 1; }
 			if(strcasecmp(token,     "ESP") == 0) { g_ipp_a[IPPROTO_ESP]     = 1; }
 			if(strcasecmp(token,      "AH") == 0) { g_ipp_a[IPPROTO_AH]      = 1; }
+			if(strcasecmp(token,  "ICMPV6") == 0) { g_ipp_a[IPPROTO_ICMPV6]  = 1; }
 			if(strcasecmp(token,     "MTP") == 0) { g_ipp_a[IPPROTO_MTP]     = 1; }
 			if(strcasecmp(token,  "BEETPH") == 0) { g_ipp_a[IPPROTO_BEETPH]  = 1; }
 			if(strcasecmp(token,   "ENCAP") == 0) { g_ipp_a[IPPROTO_ENCAP]   = 1; }
