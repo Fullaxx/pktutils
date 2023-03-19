@@ -16,6 +16,14 @@ typedef struct {
 #define ICMP_CODE(s) (      s->code)
 #define ICMP_CSUM(s) (ntohs(s->sum))
 
+#ifndef ICMP_ECHOREPLY
+#define ICMP_ECHOREPLY (0)
+#endif
+
+#ifndef ICMP_ECHO
+#define ICMP_ECHO (8)
+#endif
+
 typedef struct {
 	uint16_t src;
 	uint16_t dst;
@@ -29,14 +37,21 @@ typedef struct {
 } __attribute__ ((packed)) tcp_t;
 #define SIZE_TCP (sizeof(tcp_t))
 
-#define TCP_SRCP(s)  (ntohs(s->src))
-#define TCP_DSTP(s)  (ntohs(s->dst))
-#define TCP_SEQ(s)   (ntohl(s->seq))
-#define TCP_ACK(s)   (ntohl(s->ack))
-#define TCP_HSIZE(s) (     (s->hlres & 0xF0) >> 2) /* convert words to bytes */
-#define TCP_WIN(s)   (ntohs(s->win))
-#define TCP_CSUM(s)  (ntohs(s->sum))
-#define TCP_URGP(s)  (ntohs(s->urp))
+#define TCP_SRCP(s)   (ntohs(s->src))
+#define TCP_DSTP(s)   (ntohs(s->dst))
+#define TCP_SEQ(s)    (ntohl(s->seq))
+#define TCP_ACK(s)    (ntohl(s->ack))
+#define TCP_HSIZE(s)  (     (s->hlres & 0xF0) >> 2) /* convert words to bytes */
+#define TCP_FLAGS(s)  (      s->flags)
+#define TCP_URGBIT(s) (TCP_FLAGS(s) & 0x20)
+#define TCP_ACKBIT(s) (TCP_FLAGS(s) & 0x10)
+#define TCP_PSHBIT(s) (TCP_FLAGS(s) & 0x08)
+#define TCP_RSTBIT(s) (TCP_FLAGS(s) & 0x04)
+#define TCP_SYNBIT(s) (TCP_FLAGS(s) & 0x02)
+#define TCP_FINBIT(s) (TCP_FLAGS(s) & 0x01)
+#define TCP_WIN(s)    (ntohs(s->win))
+#define TCP_CSUM(s)   (ntohs(s->sum))
+#define TCP_URGP(s)   (ntohs(s->urp))
 
 typedef struct {
 	uint16_t src;
