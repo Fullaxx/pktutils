@@ -5,5 +5,7 @@
 *.pcap
 *.pcapng
 
+__pycache__/
+
 # Design docs
 *.DNC.md
