@@ -40,11 +40,11 @@ INVERTMATCH=1 ./pex_eth_bcast.exe unicast.pcap capture.pcap
   - an unreadable first haystack;
   - an output that can't be written.
 
-  Otherwise it is 0, even if later haystacks failed.
+  Otherwise it is 0, even if later haystacks failed ([#12](https://github.com/Fullaxx/pktutils/issues/12); silent skips: [#8](https://github.com/Fullaxx/pktutils/issues/8)).
 
 **Cautions:**
-- **Never list the needle file among the haystacks.** For example, don't run `./pex_tcp_port.exe 80 out.pcap *.pcap` in a directory that already holds `out.pcap`. The needle is truncated before it is read. If it comes later in the list, it is read back while it is being written, which can repeat until the disk is full. Write the output somewhere the glob doesn't reach.
-- **Give every haystack the same link type as the first.** Matches from a file with a different link type are still written to the output, which then labels them with the wrong link type.
+- **Never list the needle file among the haystacks.** For example, don't run `./pex_tcp_port.exe 80 out.pcap *.pcap` in a directory that already holds `out.pcap`. The needle is truncated before it is read. If it comes later in the list, it is read back while it is being written, which can repeat until the disk is full. Write the output somewhere the glob doesn't reach ([#2](https://github.com/Fullaxx/pktutils/issues/2)).
+- **Give every haystack the same link type as the first.** Matches from a file with a different link type are still written to the output, which then labels them with the wrong link type ([#9](https://github.com/Fullaxx/pktutils/issues/9)).
 
 ## Tools
 
@@ -66,8 +66,8 @@ pex_eth_proto.exe <ETH PROTO LIST> <NEEDLE> <HAYSTACK> [HAYSTACK ...]
 - Works on Ethernet captures (link type 1) and matches the frame's outermost EtherType. A VLAN-tagged frame matches `VLAN`, not the type inside the tag.
 - The list is comma-separated decimal numbers (1–65535) and/or these names (any case): `LLC PUP SPRITE IP ARP REVARP AT AARP VLAN IPX IPV6 LOOPBACK`.
 - `LLC` matches IEEE 802.3 frames, whose type/length field is 1500 or less.
-- Numbers are decimal: IPv4 is `2048`; `0x0800` is not understood.
-- Entries that aren't recognized are ignored without a warning.
+- Numbers are decimal: IPv4 is `2048`; `0x0800` is not understood ([#23](https://github.com/Fullaxx/pktutils/issues/23)).
+- Entries that aren't recognized are ignored without a warning ([#23](https://github.com/Fullaxx/pktutils/issues/23)).
 
 Example:
 ```
@@ -79,7 +79,7 @@ Example:
 pex_ip_ttl.exe <IP TTL LIST> <NEEDLE> <HAYSTACK> [HAYSTACK ...]
 ```
 - Matches the TTL (IPv4) or hop limit (IPv6) of the packet's first IP header.
-- The list is comma-separated decimal values from 0 to 255.
+- The list is comma-separated decimal values from 0 to 255. Values outside that range are not rejected yet ([#23](https://github.com/Fullaxx/pktutils/issues/23)).
 
 Example:
 ```
@@ -92,9 +92,9 @@ pex_ip_proto.exe <IP PROTO LIST> <NEEDLE> <HAYSTACK> [HAYSTACK ...]
 ```
 - **What is matched:**
   - IPv4: the protocol field of the first IPv4 header.
-  - IPv6: the next-header value of the first IPv6 header. A Hop-by-Hop header is skipped first, so the header after it is matched; other extension headers are not skipped.
+  - IPv6: the next-header value of the first IPv6 header. A Hop-by-Hop header is skipped first, so the header after it is matched; other extension headers are not skipped ([#5](https://github.com/Fullaxx/pktutils/issues/5)).
 - **The list** is comma-separated decimal numbers (1–255) and/or these names (any case): `ICMP IGMP IPIP TCP EGP PUP UDP IDP TP DCCP RSVP GRE ESP AH ICMPV6 MTP BEETPH ENCAP PIM COMP SCTP UDPLITE MPLS RAW`.
-- **Protocol 0:** use the name `ZERO`; a plain `0` is ignored.
+- **Protocol 0:** use the name `ZERO`; a plain `0` is ignored ([#23](https://github.com/Fullaxx/pktutils/issues/23)).
 
 Example:
 ```
@@ -112,7 +112,7 @@ pex_ip4_addr.exe <IP4 ADDR> <NEEDLE> <HAYSTACK> [HAYSTACK ...]
 ```
 pex_ip4_subnet.exe <IP4 SUBNET> <NEEDLE> <HAYSTACK> [HAYSTACK ...]
 ```
-- Matches packets with a source or destination address inside the subnet. Every IPv4 header in the packet is checked, including headers inside IP tunnels.
+- Matches packets with a source or destination address inside the subnet. Every IPv4 header in the packet is checked, including headers inside IP tunnels ([#17](https://github.com/Fullaxx/pktutils/issues/17)).
 - The subnet is in CIDR notation (`10.0.0.0/8`); host bits are ignored, so `10.1.2.3/8` is the same as `10.0.0.0/8`.
 
 Example:

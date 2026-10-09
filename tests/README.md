@@ -22,30 +22,30 @@ It prints the path of every file it writes. Without a directory, files go into t
 python3 tests/mkpcap.py eth_vlan /tmp/pk
 extraction/pex_tcp_port.exe 80 /tmp/pk/out.pcap /tmp/pk/eth_vlan.pcap
 ```
-`eth_vlan.pcap` holds three frames with TCP destination port 80: one untagged, one 802.1Q-tagged and one 802.1Q PPPoE frame. Today the extraction finds only the untagged one (#4).
+`eth_vlan.pcap` holds three frames with TCP destination port 80: one untagged, one 802.1Q-tagged and one 802.1Q PPPoE frame. Today the extraction finds only the untagged one ([#4](https://github.com/Fullaxx/pktutils/issues/4)).
 
 ### Scenarios
 | Scenario | Files | Link type | Contents | Issues |
 |---|---|---|---|---|
 | `basic` | basic.pcap | 1 | TCP 51514→443; mDNS UDP 5353↔5353 to a multicast MAC; ARP request to broadcast | — |
-| `edges` | edges.pcap | 1 | TCP 65535→80; UDP 5353↔5353; UDP 65535↔65535; EtherType 0xFFFF | #1, #14 |
-| `big` | big.pcap | 1 | 100 full-size (1514-byte) TCP→80 frames | #2 |
-| `ipv4_frag` | ipv4_frag.pcap | 1 | IPv4 first fragment TCP→80; non-first fragments whose data starts `00 50 00 50` (TCP) and `00 35 00 35` (UDP) | #3 |
-| `eth_vlan` | eth_vlan.pcap | 1 | untagged TCP→80; 802.1Q TCP→80; 802.1ad + 802.1Q UDP→53; 802.1Q IPv6 TCP→443; 802.1Q PPPoE TCP→80 | #4 |
-| `vlan_bomb` | vlan_bomb.pcap | 1 | one 262,144-byte frame: 65,500 stacked 802.1Q tags, then IPv4/TCP→80 | #4, #20 |
-| `ipv6_ext` | ipv6_ext.pcap | 1 | 16-byte Hop-by-Hop/TCP→80; DestOpts/UDP→53; Routing/TCP→80; first fragment UDP→53; fragment at offset 800 with data `00 35 00 35`; Hop-by-Hop/DestOpts/ESP; hop limit 7 with a truncated Hop-by-Hop header | #5 |
-| `sll` | sll.pcap | 113 | Linux cooked v1: IPv4, 802.1Q + IPv4, PPPoE and IPv6, each TCP→80 | #6 |
-| `sll2` | sll2.pcap | 276 | Linux cooked v2: IPv4 TCP→80; IPv6 UDP→53; 802.1Q + IPv4 TCP→80 | #6 |
-| `ppp` | ppp.pcap | 9 | PPP IPv4/TCP→80 with `FF 03`, without `FF 03`, and with a 1-byte protocol (PFC); an LCP request | #7 |
-| `headers` | headers_empty.pcap, headers_short.pcap, headers_pcapng.pcapng, headers_swapped.pcap, headers_modified.pcap, headers_dir.pcap/ | — | inputs to reject: an empty file, 10 bytes, pcapng, a byte-swapped pcap, a modified pcap (magic 0xA1B2CD34), and a directory named like a pcap | #8, #12 |
-| `lt_mix` | lt_mix_1_eth.pcap, lt_mix_2_sll.pcap | 1, 113 | the same kind of TCP→80 packet in an Ethernet file and in a Linux cooked v1 file | #9 |
-| `len_clamp` | len_clamp.pcap | 1 | IPv4 total length 20 padded to 60 bytes; TSO (total length 0) TCP→80; IPv6 payload length 0 TCP→80; TCP→80 with a 4-byte FCS; TCP→80 cut by snaplen (54 of 1514 bytes) | #10, #15 |
-| `badts` | badts_us.pcap, badts_ns.pcap | 1 | TCP→80 with timestamp fractions 999999 / 1000000 / 2500000 (µs file) and 999999999 / 1000000000 / 2500000000 (ns file) | #11 |
-| `pppoe` | pppoe.pcap | 1 | PPPoE session IPv4/TCP→80 cut by snaplen to 100 bytes | #13 |
-| `ip4_tunnel` | ip4_tunnel.pcap | 1 | IPv4-in-IPv4: outer 172.16.0.1→172.16.0.2, inner 10.1.1.1→10.2.2.2 TCP→80 | #17 |
-| `dlt_null` | dlt_null.pcap | 0 | BSD loopback IPv4/TCP→80 | #21 |
-| `nest` | nest.pcap | 1 | one frame with 13,105 nested IPv4-in-IPv4 headers around TCP→80 | #20 |
-| `l4_trunc` | l4_trunc.pcap | 1 | TCP→80 cut by snaplen 6 bytes into the TCP header; an RFC 1858 tiny first fragment with 8 bytes of TCP | #22 |
+| `edges` | edges.pcap | 1 | TCP 65535→80; UDP 5353↔5353; UDP 65535↔65535; EtherType 0xFFFF | [#1](https://github.com/Fullaxx/pktutils/issues/1), [#14](https://github.com/Fullaxx/pktutils/issues/14) |
+| `big` | big.pcap | 1 | 100 full-size (1514-byte) TCP→80 frames | [#2](https://github.com/Fullaxx/pktutils/issues/2) |
+| `ipv4_frag` | ipv4_frag.pcap | 1 | IPv4 first fragment TCP→80; non-first fragments whose data starts `00 50 00 50` (TCP) and `00 35 00 35` (UDP) | [#3](https://github.com/Fullaxx/pktutils/issues/3) |
+| `eth_vlan` | eth_vlan.pcap | 1 | untagged TCP→80; 802.1Q TCP→80; 802.1ad + 802.1Q UDP→53; 802.1Q IPv6 TCP→443; 802.1Q PPPoE TCP→80 | [#4](https://github.com/Fullaxx/pktutils/issues/4) |
+| `vlan_bomb` | vlan_bomb.pcap | 1 | one 262,144-byte frame: 65,500 stacked 802.1Q tags, then IPv4/TCP→80 | [#4](https://github.com/Fullaxx/pktutils/issues/4), [#20](https://github.com/Fullaxx/pktutils/issues/20) |
+| `ipv6_ext` | ipv6_ext.pcap | 1 | 16-byte Hop-by-Hop/TCP→80; DestOpts/UDP→53; Routing/TCP→80; first fragment UDP→53; fragment at offset 800 with data `00 35 00 35`; Hop-by-Hop/DestOpts/ESP; hop limit 7 with a truncated Hop-by-Hop header | [#5](https://github.com/Fullaxx/pktutils/issues/5) |
+| `sll` | sll.pcap | 113 | Linux cooked v1: IPv4, 802.1Q + IPv4, PPPoE and IPv6, each TCP→80 | [#6](https://github.com/Fullaxx/pktutils/issues/6) |
+| `sll2` | sll2.pcap | 276 | Linux cooked v2: IPv4 TCP→80; IPv6 UDP→53; 802.1Q + IPv4 TCP→80 | [#6](https://github.com/Fullaxx/pktutils/issues/6) |
+| `ppp` | ppp.pcap | 9 | PPP IPv4/TCP→80 with `FF 03`, without `FF 03`, and with a 1-byte protocol (PFC); an LCP request | [#7](https://github.com/Fullaxx/pktutils/issues/7) |
+| `headers` | headers_empty.pcap, headers_short.pcap, headers_pcapng.pcapng, headers_swapped.pcap, headers_modified.pcap, headers_dir.pcap/ | — | inputs to reject: an empty file, 10 bytes, pcapng, a byte-swapped pcap, a modified pcap (magic 0xA1B2CD34), and a directory named like a pcap | [#8](https://github.com/Fullaxx/pktutils/issues/8), [#12](https://github.com/Fullaxx/pktutils/issues/12) |
+| `lt_mix` | lt_mix_1_eth.pcap, lt_mix_2_sll.pcap | 1, 113 | the same kind of TCP→80 packet in an Ethernet file and in a Linux cooked v1 file | [#9](https://github.com/Fullaxx/pktutils/issues/9) |
+| `len_clamp` | len_clamp.pcap | 1 | IPv4 total length 20 padded to 60 bytes; TSO (total length 0) TCP→80; IPv6 payload length 0 TCP→80; TCP→80 with a 4-byte FCS; TCP→80 cut by snaplen (54 of 1514 bytes) | [#10](https://github.com/Fullaxx/pktutils/issues/10), [#15](https://github.com/Fullaxx/pktutils/issues/15) |
+| `badts` | badts_us.pcap, badts_ns.pcap | 1 | TCP→80 with timestamp fractions 999999 / 1000000 / 2500000 (µs file) and 999999999 / 1000000000 / 2500000000 (ns file) | [#11](https://github.com/Fullaxx/pktutils/issues/11) |
+| `pppoe` | pppoe.pcap | 1 | PPPoE session IPv4/TCP→80 cut by snaplen to 100 bytes | [#13](https://github.com/Fullaxx/pktutils/issues/13) |
+| `ip4_tunnel` | ip4_tunnel.pcap | 1 | IPv4-in-IPv4: outer 172.16.0.1→172.16.0.2, inner 10.1.1.1→10.2.2.2 TCP→80 | [#17](https://github.com/Fullaxx/pktutils/issues/17) |
+| `dlt_null` | dlt_null.pcap | 0 | BSD loopback IPv4/TCP→80 | [#21](https://github.com/Fullaxx/pktutils/issues/21) |
+| `nest` | nest.pcap | 1 | one frame with 13,105 nested IPv4-in-IPv4 headers around TCP→80 | [#20](https://github.com/Fullaxx/pktutils/issues/20) |
+| `l4_trunc` | l4_trunc.pcap | 1 | TCP→80 cut by snaplen 6 bytes into the TCP header; an RFC 1858 tiny first fragment with 8 bytes of TCP | [#22](https://github.com/Fullaxx/pktutils/issues/22) |
 
 ### Using it from Python
 The builders can also be imported:

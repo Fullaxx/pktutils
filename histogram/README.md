@@ -36,12 +36,14 @@ COUNT is how many times the value was seen. % is COUNT divided by the tool's tot
 | `phist_udp_port` | `UDP PORT,COUNT,%` | The same, for UDP; UDP-Lite is included | Number of UDP packets |
 | `phist_sctp_port` | `SCTP PORT,COUNT,%` | The same, for SCTP | Number of SCTP packets |
 
-Because the port tools count two ports per packet, their % column adds up to about 200%. A port's % is roughly the share of packets that use it. A packet whose source and destination ports are equal counts twice for that port.
+Because the port tools count two ports per packet, their % column adds up to about 200%. A port's % is roughly the share of packets that use it. A packet whose source and destination ports are equal counts twice for that port ([#14](https://github.com/Fullaxx/pktutils/issues/14)).
 
 The link types the tools can read are listed in the [main README](../README.md#input). How files are handled:
 - A file that can't be opened, or isn't a supported pcap, is skipped — sometimes without a message.
 - A file that ends in the middle of a packet is counted up to that point.
-- The exit status is 0 either way.
+- The exit status is 0 either way ([#12](https://github.com/Fullaxx/pktutils/issues/12)).
 
 ## Known issues
-Port 65535 and EtherType 0xFFFF are not reported. Counting them writes one element past the end of the counter array.
+Port 65535 and EtherType 0xFFFF are not reported. Counting them writes one element past the end of the counter array ([#1](https://github.com/Fullaxx/pktutils/issues/1)).
+
+Other open problems are tracked as [bug issues](https://github.com/Fullaxx/pktutils/issues?q=is%3Aissue+is%3Aopen+label%3Abug).

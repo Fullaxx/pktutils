@@ -52,19 +52,19 @@ Each tool is built three ways, in its own directory:
 ## Input
 The tools read classic libpcap files (`.pcap`) with microsecond or nanosecond timestamps, written in the byte order of the machine that reads them.
 
-pcapng is not supported; convert it first with `editcap -F pcap in.pcapng out.pcap`. Byte-swapped files (written on a machine with the other byte order) are not supported either.
+pcapng is not supported; convert it first with `editcap -F pcap in.pcapng out.pcap`. Byte-swapped files (written on a machine with the other byte order) are not supported either ([#25](https://github.com/Fullaxx/pktutils/issues/25)).
 
 Supported link types:
 
 | Link type | Value | Notes |
 |---|---|---|
 | Ethernet | 1 | |
-| PPP | 9 | Parsed only when the frame starts with the `FF 03` address/control bytes. The `pex_*` tools don't extract from these files yet |
+| PPP | 9 | Parsed only when the frame starts with the `FF 03` address/control bytes. The `pex_*` tools don't extract from these files yet ([#7](https://github.com/Fullaxx/pktutils/issues/7)) |
 | Raw IP | 12, 101 | |
-| Linux cooked capture v1 (SLL) | 113 | IPv4 and IPv6 payloads only |
+| Linux cooked capture v1 (SLL) | 113 | IPv4 and IPv6 payloads only ([#6](https://github.com/Fullaxx/pktutils/issues/6)) |
 | Raw IPv4 / raw IPv6 | 228 / 229 | |
 
-Files with any other link type are read, but no packet in them matches. That includes Linux cooked capture v2 (SLL2, 276), which newer tcpdump writes for `-i any`, as well as BSD loopback and 802.11.
+Files with any other link type are read, but no packet in them matches. That includes Linux cooked capture v2 (SLL2, 276), which newer tcpdump writes for `-i any`, as well as BSD loopback and 802.11. See [#6](https://github.com/Fullaxx/pktutils/issues/6) (SLL2) and [#21](https://github.com/Fullaxx/pktutils/issues/21) (unsupported link types are not reported).
 
 ## Documentation
 - [extraction/README.md](extraction/README.md): usage of each `pex_*` tool
@@ -72,7 +72,7 @@ Files with any other link type are read, but no packet in them matches. That inc
 - [tests/README.md](tests/README.md): `mkpcap.py`, which builds sample pcaps for tests and bug reports
 - [CONTRIBUTING.md](CONTRIBUTING.md): how to file an issue and send a change
 - [CODING_STYLE.md](CODING_STYLE.md): the code's style and patterns
-- [TODO.md](TODO.md): planned work; bugs and requests are tracked in [GitHub issues](https://github.com/Fullaxx/pktutils/issues)
+- [TODO.md](TODO.md): planned work. Bugs and requests are tracked in [GitHub issues](https://github.com/Fullaxx/pktutils/issues); known bugs carry the [`bug` label](https://github.com/Fullaxx/pktutils/issues?q=is%3Aissue+is%3Aopen+label%3Abug)
 
 ## License
 GNU General Public License, version 2. See [LICENSE](LICENSE).
