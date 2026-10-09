@@ -69,6 +69,7 @@ Files with any other link type are read, but no packet in them matches. That inc
 ## Documentation
 - [extraction/README.md](extraction/README.md): usage of each `pex_*` tool
 - [histogram/README.md](histogram/README.md): usage and output of the `phist_*` tools
+- [tests/README.md](tests/README.md): `mkpcap.py`, which builds sample pcaps for tests and bug reports
 - [CONTRIBUTING.md](CONTRIBUTING.md): how to file an issue and send a change
 - [CODING_STYLE.md](CODING_STYLE.md): the code's style and patterns
 - [TODO.md](TODO.md): planned work; bugs and requests are tracked in [GitHub issues](https://github.com/Fullaxx/pktutils/issues)

@@ -23,7 +23,7 @@ labels: needs-triage
 - Tool and full command line (including `INVERTMATCH` if set):
 - pktutils commit (`git rev-parse --short HEAD`):
 - Input link type and timestamp resolution (`capinfos file.pcap`):
-- Minimal pcap (attach it zipped), or how to build one:
+- Minimal pcap: a `tests/mkpcap.py` scenario, an attached zipped pcap, or how to build one:
 - Expected output:
 - Actual output:
 - File/line references, if known:

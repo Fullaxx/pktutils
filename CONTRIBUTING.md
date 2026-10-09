@@ -43,8 +43,9 @@ Finish with what someone needs to reproduce the problem:
 - **Version:** the pktutils commit (`git rev-parse --short HEAD`).
 - **Input format:** the input's link type and timestamp resolution. `capinfos file.pcap` shows both.
 - **Sample:** a minimal pcap that triggers the problem.
-  - Attach it zipped.
-  - If the capture is sensitive, describe how to build an equivalent one (with tshark, editcap or scapy) instead. Never attach captures containing private data.
+  - If one of the [ready-made samples](tests/README.md) shows it, name the scenario. `python3 tests/mkpcap.py list` lists them.
+  - Otherwise attach a minimal pcap, zipped.
+  - If the capture is sensitive, describe how to build an equivalent one instead (with `tests/mkpcap.py`, tshark, editcap or scapy). Never attach captures containing private data.
 - **Output:** expected and actual output.
 - **Code:** file and line references, if you know them.
 - **Related:** issue numbers (`#N`).

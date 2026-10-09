@@ -14,6 +14,7 @@ The style serves the goals in the [README](README.md):
   - `common/` holds the pcap reader, the pcap writer and the protocol headers.
   - `extraction/` holds the `pex_*` tools.
   - `histogram/` holds the `phist_*` tools.
+  - `tests/` holds test helpers such as `mkpcap.py`. They are Python 3, use only the standard library, and follow PEP 8 (4-space indentation; lines up to 99 characters, as PEP 8 allows). The tools themselves stay C.
 - **License header:** `.c` files and module headers start with the GPLv2 block, which is:
   - `Copyright (C) 2022 Brett Kuskie <fullaxx@gmail.com>`;
   - the "version 2 of the License" wording.
