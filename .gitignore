@@ -4,3 +4,6 @@
 *.dbg
 *.pcap
 *.pcapng
+
+# Design docs
+*.DNC.md
